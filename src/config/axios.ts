@@ -1,5 +1,5 @@
 import axiosApi from "axios";
-// import { cookies } from "next/headers";
+import Cookies from 'js-cookie'
 
 const axios = axiosApi.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_API_URL,
@@ -9,11 +9,11 @@ const axios = axiosApi.create({
 });
 
 axios.interceptors.request.use((reqConfig) => {
-  // const token = cookies().get("accessToken")?.value;
+  const token = Cookies.get("accessToken");
   
-  // if (token && !reqConfig.headers.Authorization) {
-  //   reqConfig.headers.Authorization = `Bearer ${token}`;
-  // }
+  if (token && !reqConfig.headers.Authorization) {
+    reqConfig.headers.Authorization = `Bearer ${token}`;
+  }
   return reqConfig;
 });
 
@@ -49,8 +49,8 @@ axios.interceptors.response.use(
 
       if(error.response?.status === 401 &&
         error.config.url == "/auth/refresh"){
-          // cookies().delete('accessToken')
-          // cookies().delete('refreshToken')
+          Cookies.remove('accessToken')
+          Cookies.remove('refreshToken')
           window.location.href = `${window.location.origin}/login`
           return
         }
@@ -74,7 +74,6 @@ axios.interceptors.response.use(
       throw error;
     } catch (e) {
       throw error;
-      console.log(e);
     }
   }
 );
