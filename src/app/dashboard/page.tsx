@@ -1,7 +1,7 @@
 "use client";
 import { useAuthStore } from "@/modules/auth/store/auth.store";
 import { Button, message } from "antd";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import React, { FC, use, useCallback } from "react";
 import { useShallow } from "zustand/shallow";
 
@@ -27,7 +27,7 @@ export const Dashboard: FC<Props> = ({}) => {
       });
   }, []);
   return (
-    <>
+    <div className="flex items-center justify-center flex-col">
       <div className="text-7xl bg-gradient-to-r from-[#484348] to-[#787478] bg-clip-text text-transparent font-extrabold">
         Authenticated
       </div>
@@ -39,7 +39,7 @@ export const Dashboard: FC<Props> = ({}) => {
       >
         Logout
       </Button>
-    </>
+    </div>
   );
 };
 export default Dashboard;
