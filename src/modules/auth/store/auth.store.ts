@@ -5,6 +5,7 @@ import { authService } from "../services/auth.services";
 type AuthStore = {
     loading: boolean;
     login: (data: LoginPayload) => Promise<void>;
+    logout: () => Promise<void>;
 };
 
 export const useAuthStore = create<AuthStore>((set) => ({
@@ -12,6 +13,11 @@ export const useAuthStore = create<AuthStore>((set) => ({
     login: async (data:LoginPayload) => {
         set({loading:true})
         await authService.login(data);
+        set({loading:false})
+    },
+    logout: async () => {
+        set({loading:true})
+        await authService.logout()
         set({loading:false})
     }
 }));

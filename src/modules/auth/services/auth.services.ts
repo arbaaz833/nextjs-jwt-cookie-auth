@@ -9,6 +9,15 @@ async function login(data:LoginPayload){
     return res.data
 }
 
-export const authService = {
-    login
+async function logout(){
+    const res = await axios.delete("/auth/logout")
+    Cookies.remove("accessToken")
+    Cookies.remove("refreshToken")
+    return res.data
 }
+
+export const authService = {
+    login,
+    logout
+}
+export default authService
