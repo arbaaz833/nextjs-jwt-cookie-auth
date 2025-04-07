@@ -21,15 +21,20 @@ const Login: FC<IProps> = ({}) => {
   );
 
   const onFinish = useCallback((values: FormValues) => {
-    login(values).then(() => {
-      message.success("Logged In successfully");
-    });
+    console.log("values: ", values);
+    login(values)
+      .then(() => {
+        message.success("Logged In successfully");
+      })
+      .catch((e) => console.error(e));
   }, []);
 
   return (
-    <div className="shadow-[0 4px 30px rgba(0, 0, 0, 0.1)] border-[rgba(255, 255, 255, 0.3)] w-[50vw] max-w-[600px] rounded-2xl p-5 backdrop-blur-sm">
+    <div className="border border-gray-700/50 shadow-[0_4px_30px_rgba(0,0,0,0.1)] bg-transparent w-[50vw] max-w-[600px] rounded-2xl p-5 backdrop-blur-sm">
       <div className="my-6 flex items-center justify-center">
-        <div className="text-xl pb-2">Login</div>
+        <div className="text-3xl bg-gradient-to-r from-[#484348] to-[#787478] bg-clip-text text-transparent font-extrabold pb-1">
+          Login
+        </div>
       </div>
       <Form
         name="normal_login"

@@ -1,19 +1,19 @@
 import axiosApi from "axios";
-import { cookies } from "next/headers";
+// import { cookies } from "next/headers";
 
 const axios = axiosApi.create({
-  baseURL: process.env.BASE_API_URL,
+  baseURL: process.env.NEXT_PUBLIC_BASE_API_URL,
   headers: {
     "Content-Type": "application/json",
   },
 });
 
 axios.interceptors.request.use((reqConfig) => {
-  const token = cookies().get("accessToken")?.value;
+  // const token = cookies().get("accessToken")?.value;
   
-  if (token && !reqConfig.headers.Authorization) {
-    reqConfig.headers.Authorization = `Bearer ${token}`;
-  }
+  // if (token && !reqConfig.headers.Authorization) {
+  //   reqConfig.headers.Authorization = `Bearer ${token}`;
+  // }
   return reqConfig;
 });
 
@@ -49,8 +49,8 @@ axios.interceptors.response.use(
 
       if(error.response?.status === 401 &&
         error.config.url == "/auth/refresh"){
-          cookies().delete('accessToken')
-          cookies().delete('refreshToken')
+          // cookies().delete('accessToken')
+          // cookies().delete('refreshToken')
           window.location.href = `${window.location.origin}/login`
           return
         }

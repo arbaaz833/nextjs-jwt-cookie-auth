@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
-import { ConfigProvider, theme } from "antd";
+import { AntdConfig } from "@/components/antdConfig/antdConfig";
 
-const geistSans = localFont({
+export const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
   weight: "100 900",
@@ -28,19 +28,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.className} ${geistMono.className} antialiased bg-darkBg`}
+        className={`${geistSans.className} ${geistMono.className} antialiased bg-[#000000]`}
       >
-        <ConfigProvider
-          theme={{
-            token: {
-              colorPrimary: "#85418A",
-              fontFamily: geistSans.style.fontFamily,
-            },
-            algorithm: theme.darkAlgorithm,
-          }}
-        >
+        <AntdConfig>
           <AntdRegistry>{children}</AntdRegistry>
-        </ConfigProvider>
+        </AntdConfig>
       </body>
     </html>
   );
