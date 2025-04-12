@@ -2,7 +2,7 @@
 import { useAuthStore } from "@/modules/auth/store/auth.store";
 import { Button, message } from "antd";
 import { useRouter } from "next/navigation";
-import React, { FC, use, useCallback } from "react";
+import React, { FC, useCallback } from "react";
 import { useShallow } from "zustand/shallow";
 
 interface Props {}

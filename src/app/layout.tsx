@@ -3,12 +3,14 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { AntdConfig } from "@/components/antdConfig/antdConfig";
+import { Inter } from "next/font/google";
 
-export const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
+export const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
 });
+
 const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
@@ -27,10 +29,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.className} ${geistMono.className} antialiased bg-[#000000]`}
-      >
-        <AntdConfig>
+      <body className={`${inter.className} antialiased bg-[#000000]`}>
+        <AntdConfig fontFamily={geistMono.style.fontFamily}>
           <AntdRegistry>{children}</AntdRegistry>
         </AntdConfig>
       </body>
