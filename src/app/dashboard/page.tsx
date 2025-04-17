@@ -3,18 +3,13 @@ import { useAuthStore } from "@/modules/auth/store/auth.store";
 import { Button, message } from "antd";
 import { useRouter } from "next/navigation";
 import React, { FC, useCallback } from "react";
-import { useShallow } from "zustand/shallow";
-
 interface Props {}
 
 export const Dashboard: FC<Props> = ({}) => {
   const router = useRouter();
-  const { logout, loading } = useAuthStore(
-    useShallow((state) => ({
-      loading: state.loading,
-      logout: state.logout,
-    }))
-  );
+  const loading = useAuthStore((state) => state.logoutLoading);
+  const logout = useAuthStore((state) => state.logout);
+  const user = useAuthStore((state) => state.user);
 
   const handleLogout = useCallback(async () => {
     await logout()
@@ -29,7 +24,7 @@ export const Dashboard: FC<Props> = ({}) => {
   return (
     <div className="flex items-center justify-center flex-col">
       <div className="text-7xl bg-gradient-to-r from-[#484348] to-[#787478] bg-clip-text text-transparent font-extrabold">
-        Authenticated
+        Welcome, {user?.userName.toUpperCase() || null}
       </div>
       <Button
         className="mt-4"

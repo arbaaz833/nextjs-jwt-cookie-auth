@@ -1,29 +1,30 @@
 import { create } from "zustand";
-import { LoginPayload, SignupPayload } from "../types/auth.types";
+import { LoginPayload, SignupPayload, User } from "../types/auth.types";
 import { authService } from "../services/auth.services";
+import { asyncTrackerMiddleware } from "@/utils/zustand-async-middleware";
 
 type AuthStore = {
-    loading: boolean;
-    login: (data: LoginPayload) => Promise<void>;
-    logout: () => Promise<void>;
-    signup: (data:SignupPayload) => Promise<void>;
+  login: (data: LoginPayload) => Promise<void>;
+  logout: () => Promise<void>;
+  loginLoading?: boolean;
+  user:User | null;
+  logoutLoading?: boolean;
+  signupLoading?: boolean;
+  signup: (data: SignupPayload) => Promise<void>;
 };
 
-export const useAuthStore = create<AuthStore>((set) => ({
-    loading:false,
-    login: async (data:LoginPayload) => {
-        set({loading:true})
-        await authService.login(data);
-        set({loading:false})
+export const useAuthStore = create<AuthStore>()(
+  asyncTrackerMiddleware((set) => ({
+    user: null,
+    login: async (data: LoginPayload) => {
+      const res =  await authService.login(data);
+      set({ user: res.user});
     },
-    signup: async (data:SignupPayload) => {
-        set({loading:true})
-        await authService.signup(data)
-        set({loading:false})
+    signup: async (data: SignupPayload) => {
+      await authService.signup(data);
     },
     logout: async () => {
-        set({loading:true})
-        await authService.logout()
-        set({loading:false})
-    }
-}));
+      await authService.logout();
+    },
+  }))
+);

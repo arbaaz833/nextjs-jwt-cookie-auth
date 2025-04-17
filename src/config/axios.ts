@@ -1,5 +1,8 @@
-import axiosApi from "axios";
+import authService from "@/modules/auth/services/auth.services";
+import { message } from "antd";
+import axiosApi, { AxiosError } from "axios";
 import Cookies from 'js-cookie'
+import { cookies } from "next/headers";
 
 const axios = axiosApi.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_API_URL,
@@ -21,54 +24,38 @@ axios.interceptors.response.use(
   async (response) => {
     return response.data;
   },
-  async (error) => {
+  async (error:AxiosError<{error:string|null,data:null}>) => {
     try {
-      // if (error.response?.status === 403 && error.config.method !== "get") {
-      //   AlertPopup({
-      //     title: "Permission Denied",
-      //     message: PERMISSION_ERR_MSG,
-      //     cancelText: null,
-      //     okText: "Ok",
-      //   });
-      //   error.message = PERMISSION_ERR_MSG;
-      //   throw error;
-      // }
-
-      // if axios config has _ignoreError set to true, then don't handle error
-      // if (error.config?._ignoreError) throw error;
-
-      // let msg = getErrorMessage(
-      //   error.response?.data?.error || error.response?.data,
-      //   ""
-      // );
-      // if (!msg)
-      //   msg = `${
-      //     error.response?.statusText ? error.response.statusText + "! " : ""
-      //   }${error.message}`;
-      // error.message = msg;
+      const errorMessage = error.response?.data.error || 'Error occured'
+      message.error(errorMessage)
 
       if(error.response?.status === 401 &&
-        error.config.url == "/auth/refresh"){
+        error.config?.url == "/auth/refresh"){
           Cookies.remove('accessToken')
           Cookies.remove('refreshToken')
           window.location.href = `${window.location.origin}/login`
           return
         }
 
-      // if (
-      //   error.response?.status === 401 &&
-      //   error.config.url !== "/auth/login"
-      // ) {
-      //   const tokens = await authService.refreshToken();
-      //   console.log("refresh response", tokens);
-      //   localStorage.setItem("accessToken", tokens!.accessToken);
-      //   localStorage.setItem("refreshToken", tokens!.refreshToken);
-      //   error.config.headers.Authorization = `Bearer ${tokens!.accessToken}`;
-      //   console.log("retrying request");
-      //   const data = await axios(error.config);
-      //   console.log("data: ", data);
-      //   return data;
-      // }
+      if (
+        error.response?.status === 401 &&
+        error.config?.url !== "/auth/login"
+      ) {
+        const refreshToken = Cookies.get('refreshToken');
+        if(!refreshToken){
+          Cookies.remove('accessToken')
+          Cookies.remove('refreshToken')
+          window.location.href = `${window.location.origin}/login`
+          return
+        }
+        const tokens = await authService.refreshToken(refreshToken);
+        Cookies.set("accessToken", tokens.accessToken, {secure: true, sameSite:'Strict'})
+        Cookies.set("refreshToken", tokens.refreshToken, {secure: true, sameSite:'Strict'})
+         error.config!.headers.Authorization = `Bearer ${tokens.accessToken}`;
+        console.log("retrying request");
+        const data = await axios(error.config!);
+        return data;
+      }
 
       // globalErrorHandler(error);
       throw error;

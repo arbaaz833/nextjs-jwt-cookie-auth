@@ -8,3 +8,10 @@ export type SignupPayload = {
     password: string;
     userName:string;
 }
+
+export type User = {
+    email: string;
+    emailVerified: boolean;
+    id: string;
+    userName: string;
+}

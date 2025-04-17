@@ -4,7 +4,6 @@ import { LockOutlined, MailOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Form, FormProps, Input, message } from "antd";
 import { useRouter } from "next/navigation";
 import React, { FC, useCallback } from "react";
-import { useShallow } from "zustand/shallow";
 
 interface IProps {}
 
@@ -17,9 +16,8 @@ type FormValues = {
 
 const Signup: FC<IProps> = (props) => {
   const router = useRouter();
-  const { loading, signup } = useAuthStore(
-    useShallow((state) => ({ loading: state.loading, signup: state.signup }))
-  );
+  const signup = useAuthStore((state) => state.signup);
+  const loading = useAuthStore((state) => state.signupLoading);
 
   const onFinish: FormProps["onFinish"] = useCallback<
     (values: FormValues) => void

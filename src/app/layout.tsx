@@ -29,9 +29,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} antialiased bg-[#000000]`}>
+      <body
+        className={`${inter.className} antialiased bg-[#000000] magicpattern`}
+      >
         <AntdConfig fontFamily={geistMono.style.fontFamily}>
-          <AntdRegistry>{children}</AntdRegistry>
+          <AntdRegistry>
+            <div className="grid place-items-center w-screen h-screen">
+              {children}
+            </div>
+          </AntdRegistry>
         </AntdConfig>
       </body>
     </html>

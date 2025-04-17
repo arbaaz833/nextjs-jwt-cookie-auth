@@ -3,7 +3,6 @@ import React, { FC, useCallback } from "react";
 import { Button, Form, Input, message } from "antd";
 import { LockOutlined, MailOutlined } from "@ant-design/icons";
 import { useAuthStore } from "@/modules/auth/store/auth.store";
-import { useShallow } from "zustand/shallow";
 import { useRouter } from "next/navigation";
 
 interface IProps {}
@@ -15,17 +14,14 @@ type FormValues = {
 
 const Login: FC<IProps> = ({}) => {
   const router = useRouter();
-  const { loadingLogin, login } = useAuthStore(
-    useShallow((state) => ({
-      loadingLogin: state.loading,
-      login: state.login,
-    }))
-  );
+  const loading = useAuthStore((state) => state.loginLoading);
+  const login = useAuthStore((state) => state.login);
 
   const onFinish = useCallback((values: FormValues) => {
     console.log("values: ", values);
     login(values)
       .then(() => {
+        console.log("HERE");
         message.success("Logged In successfully");
         router.push("/dashboard");
       })
@@ -73,7 +69,7 @@ const Login: FC<IProps> = ({}) => {
           <Form.Item className="!mb-0">
             <div className="text-center">
               <Button
-                loading={loadingLogin}
+                loading={loading}
                 type="primary"
                 htmlType="submit"
                 block
