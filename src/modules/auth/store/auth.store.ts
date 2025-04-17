@@ -1,11 +1,12 @@
 import { create } from "zustand";
-import { LoginPayload } from "../types/auth.types";
+import { LoginPayload, SignupPayload } from "../types/auth.types";
 import { authService } from "../services/auth.services";
 
 type AuthStore = {
     loading: boolean;
     login: (data: LoginPayload) => Promise<void>;
     logout: () => Promise<void>;
+    signup: (data:SignupPayload) => Promise<void>;
 };
 
 export const useAuthStore = create<AuthStore>((set) => ({
@@ -13,6 +14,11 @@ export const useAuthStore = create<AuthStore>((set) => ({
     login: async (data:LoginPayload) => {
         set({loading:true})
         await authService.login(data);
+        set({loading:false})
+    },
+    signup: async (data:SignupPayload) => {
+        set({loading:true})
+        await authService.signup(data)
         set({loading:false})
     },
     logout: async () => {

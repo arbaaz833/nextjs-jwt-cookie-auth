@@ -53,7 +53,6 @@ const Login: FC<IProps> = ({}) => {
           >
             <Input
               prefix={<MailOutlined />}
-              className="!bg-transparent"
               placeholder="Email"
               size="large"
               type="email"

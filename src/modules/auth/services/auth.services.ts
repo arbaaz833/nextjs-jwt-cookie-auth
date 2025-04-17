@@ -1,6 +1,6 @@
 import Cookies from "js-cookie"
 import axios from "../../../config/axios"
-import { LoginPayload } from "../types/auth.types"
+import { LoginPayload, SignupPayload } from "../types/auth.types"
 
 async function login(data:LoginPayload){
     const res  = await axios.post("/auth/login", data)
@@ -16,8 +16,14 @@ async function logout(){
     return res.data
 }
 
+async function signup(data:SignupPayload){
+    const res = await axios.post('/auth/signup', data)
+    return res.data
+}
+
 export const authService = {
     login,
-    logout
+    logout,
+    signup
 }
 export default authService
