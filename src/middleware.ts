@@ -1,4 +1,3 @@
-import type { Route } from "next";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 

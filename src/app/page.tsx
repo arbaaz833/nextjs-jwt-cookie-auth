@@ -3,9 +3,8 @@ import { useAuthStore } from "@/modules/auth/store/auth.store";
 import { Button, message } from "antd";
 import { useRouter } from "next/navigation";
 import React, { FC, useCallback } from "react";
-interface Props {}
 
-export const Dashboard: FC<Props> = ({}) => {
+const Dashboard: FC = ({}) => {
   const router = useRouter();
   const loading = useAuthStore((state) => state.logoutLoading);
   const logout = useAuthStore((state) => state.logout);

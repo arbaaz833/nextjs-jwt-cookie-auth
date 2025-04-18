@@ -2,7 +2,7 @@ import authService from "@/modules/auth/services/auth.services";
 import { message } from "antd";
 import axiosApi, { AxiosError } from "axios";
 import Cookies from 'js-cookie'
-import { cookies } from "next/headers";
+
 
 const axios = axiosApi.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_API_URL,
@@ -59,8 +59,8 @@ axios.interceptors.response.use(
 
       // globalErrorHandler(error);
       throw error;
-    } catch (e) {
-      throw error;
+    } catch(e) {
+      throw e;
     }
   }
 );

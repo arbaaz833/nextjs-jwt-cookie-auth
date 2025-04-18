@@ -5,14 +5,12 @@ import { LockOutlined, MailOutlined } from "@ant-design/icons";
 import { useAuthStore } from "@/modules/auth/store/auth.store";
 import { useRouter } from "next/navigation";
 
-interface IProps {}
-
 type FormValues = {
   email: string;
   password: string;
 };
 
-const Login: FC<IProps> = ({}) => {
+const Login: FC = ({}) => {
   const router = useRouter();
   const loading = useAuthStore((state) => state.loginLoading);
   const login = useAuthStore((state) => state.login);
@@ -23,7 +21,7 @@ const Login: FC<IProps> = ({}) => {
       .then(() => {
         console.log("HERE");
         message.success("Logged In successfully");
-        router.push("/dashboard");
+        router.push("/");
       })
       .catch((e) => console.error(e));
   }, []);

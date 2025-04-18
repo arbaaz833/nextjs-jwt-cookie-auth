@@ -5,8 +5,6 @@ import { Button, Form, FormProps, Input, message } from "antd";
 import { useRouter } from "next/navigation";
 import React, { FC, useCallback } from "react";
 
-interface IProps {}
-
 type FormValues = {
   userName: string;
   email: string;
@@ -14,7 +12,7 @@ type FormValues = {
   confirmPassword?: string;
 };
 
-const Signup: FC<IProps> = (props) => {
+const Signup: FC = () => {
   const router = useRouter();
   const signup = useAuthStore((state) => state.signup);
   const loading = useAuthStore((state) => state.signupLoading);
