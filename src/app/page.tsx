@@ -4,7 +4,7 @@ import { Button, message } from "antd";
 import { useRouter } from "next/navigation";
 import React, { FC, useCallback } from "react";
 
-const Dashboard: FC = ({}) => {
+const Home: FC = ({}) => {
   const router = useRouter();
   const loading = useAuthStore((state) => state.logoutLoading);
   const logout = useAuthStore((state) => state.logout);
@@ -36,4 +36,4 @@ const Dashboard: FC = ({}) => {
     </div>
   );
 };
-export default Dashboard;
+export default Home;
