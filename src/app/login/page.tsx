@@ -1,6 +1,6 @@
 "use client";
 import React, { FC, useCallback } from "react";
-import { Button, Form, Input, message, Typography } from "antd";
+import { Button, Form, Input, message } from "antd";
 import {
   ArrowRightOutlined,
   LockOutlined,
