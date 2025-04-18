@@ -1,7 +1,11 @@
 "use client";
 import React, { FC, useCallback } from "react";
-import { Button, Form, Input, message } from "antd";
-import { LockOutlined, MailOutlined } from "@ant-design/icons";
+import { Button, Form, Input, message, Typography } from "antd";
+import {
+  ArrowRightOutlined,
+  LockOutlined,
+  MailOutlined,
+} from "@ant-design/icons";
 import { useAuthStore } from "@/modules/auth/store/auth.store";
 import { useRouter } from "next/navigation";
 
@@ -65,16 +69,27 @@ const Login: FC = ({}) => {
           </Form.Item>
 
           <Form.Item className="!mb-0">
-            <div className="text-center">
+            <div className="flex flex-col items-center">
               <Button
                 loading={loading}
                 type="primary"
+                className="mb-4"
                 htmlType="submit"
                 block
                 style={{ width: "50%" }}
               >
                 Proceed
               </Button>
+              <div className="text-right w-full cursor-pointer">
+                <Button
+                  type="text"
+                  icon={<ArrowRightOutlined />}
+                  iconPosition="end"
+                  onClick={() => router.push("/signup")}
+                >
+                  Create account
+                </Button>
+              </div>
             </div>
           </Form.Item>
         </Form>
