@@ -33,11 +33,7 @@ export default function RootLayout({
         className={`${inter.className} antialiased bg-[#000000] magicpattern`}
       >
         <AntdConfig fontFamily={geistMono.style.fontFamily}>
-          <AntdRegistry>
-            <div className="grid place-items-center w-screen h-screen">
-              {children}
-            </div>
-          </AntdRegistry>
+          <AntdRegistry>{children}</AntdRegistry>
         </AntdConfig>
       </body>
     </html>

@@ -26,9 +26,6 @@ axios.interceptors.response.use(
   },
   async (error:AxiosError<{error:string|null,data:null}>) => {
     try {
-      const errorMessage = error.response?.data.error || 'Error occured'
-      message.error(errorMessage)
-
       if(error.response?.status === 401 &&
         error.config?.url == "/auth/refresh"){
           Cookies.remove('accessToken')
@@ -56,9 +53,12 @@ axios.interceptors.response.use(
         const data = await axios(error.config!);
         return data;
       }
+      const errorMessage = error.response?.data.error || 'Error occured'
+      message.error(errorMessage)
+
 
       // globalErrorHandler(error);
-      throw error;
+      throw errorMessage;
     } catch(e) {
       throw e;
     }
