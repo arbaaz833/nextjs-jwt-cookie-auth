@@ -11,8 +11,8 @@ export const Menu: FC = () => {
   const logout = useAuthStore((state) => state.logout);
   const [open, setOpen] = useState<boolean>(false);
 
-  const handleLogout = useCallback(async () => {
-    logout()
+  const handleLogout = useCallback(() => {
+    return logout()
       .then(() => {
         router.push("/login");
         message.info("Logged out successfully");
@@ -49,6 +49,7 @@ export const Menu: FC = () => {
         title="Logout"
         open={open}
         onOk={handleLogout}
+        confirmLoading={loading}
         onCancel={() => setOpen(false)}
       >
         <p>Are you sure you want to logout?</p>
