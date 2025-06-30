@@ -41,3 +41,9 @@ git clone
 cd nextjs-jwt-cookie-auth
 npm install
 cp .env.local
+```
+## check out the app
+
+```bash
+https://nextjs-jwt-cookie-auth-git-main-arbaaz833s-projects.vercel.app/
+```
